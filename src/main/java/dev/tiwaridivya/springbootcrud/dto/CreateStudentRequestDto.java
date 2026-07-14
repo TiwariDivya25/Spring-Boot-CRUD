@@ -1,10 +1,18 @@
 package dev.tiwaridivya.springbootcrud.dto;
 
+import jakarta.validation.constraints.*;
+
 public class CreateStudentRequestDto {
+    @NotBlank(message = "Name cannot be null/empty/blank")
+    @Size(min = 2, max = 50, message = "name should be withing 2 to 50 characters")
     private String name;
+    @Min(value = 18, message = "Student must be at least 18 years old")
     private int age;
+    @Email
     private String email;
+    @NotEmpty
     private int rollNo;
+    @NotBlank
     private String subject;
 
     public String getName() {

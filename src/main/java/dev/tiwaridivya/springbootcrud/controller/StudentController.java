@@ -6,6 +6,7 @@ import dev.tiwaridivya.springbootcrud.dto.UpdateStudentRequestDto;
 import dev.tiwaridivya.springbootcrud.dto.UpdateStudentResponseDto;
 import dev.tiwaridivya.springbootcrud.entity.Student;
 import dev.tiwaridivya.springbootcrud.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class StudentController {
     private StudentService studentService;
 
     @PostMapping("/create")
-    public ResponseEntity<CreateStudentResponseDto> createStudent(@RequestBody CreateStudentRequestDto createStudentRequestDto) {
+    public ResponseEntity<CreateStudentResponseDto> createStudent(@Valid @RequestBody CreateStudentRequestDto createStudentRequestDto) {
         CreateStudentResponseDto createdStudent = studentService.createStudent(createStudentRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdStudent);
     }
