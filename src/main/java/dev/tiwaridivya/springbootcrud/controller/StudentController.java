@@ -1,5 +1,9 @@
 package dev.tiwaridivya.springbootcrud.controller;
 
+import dev.tiwaridivya.springbootcrud.dto.CreateStudentRequestDto;
+import dev.tiwaridivya.springbootcrud.dto.CreateStudentResponseDto;
+import dev.tiwaridivya.springbootcrud.dto.UpdateStudentRequestDto;
+import dev.tiwaridivya.springbootcrud.dto.UpdateStudentResponseDto;
 import dev.tiwaridivya.springbootcrud.entity.Student;
 import dev.tiwaridivya.springbootcrud.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +21,14 @@ public class StudentController {
     private StudentService studentService;
 
     @PostMapping("/create")
-    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-        Student createdStudent = studentService.createStudent(student);
+    public ResponseEntity<CreateStudentResponseDto> createStudent(@RequestBody CreateStudentRequestDto createStudentRequestDto) {
+        CreateStudentResponseDto createdStudent = studentService.createStudent(createStudentRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdStudent);
     }
 
     @GetMapping("/get")
-    public ResponseEntity<Student> getStudent(@RequestParam Long id){
-        Student studentResp = studentService.getStudent(id);
+    public ResponseEntity<CreateStudentResponseDto> getStudent(@RequestParam Long id){
+        CreateStudentResponseDto studentResp = studentService.getStudent(id);
         if(studentResp == null) {
             return ResponseEntity.notFound().build();
         }
@@ -32,8 +36,8 @@ public class StudentController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<Student>> getAllStudent(){
-        List<Student> studentList = studentService.getAllStudent();
+    public ResponseEntity<List<CreateStudentResponseDto>> getAllStudent(){
+        List<CreateStudentResponseDto> studentList = studentService.getAllStudent();
         if(studentList.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -41,11 +45,17 @@ public class StudentController {
     }
 
     @PutMapping("/update/")
-    public ResponseEntity<Student> updateStudent(@RequestParam Long id, @RequestBody Student studentReq){
-        Student studentResp = studentService.updateStudent(id, studentReq);
+    public ResponseEntity<UpdateStudentResponseDto> updateStudent(
+            @RequestParam Long id,
+            @RequestBody UpdateStudentRequestDto updateStudentRequestDto) {
+
+        UpdateStudentResponseDto studentResp =
+                studentService.updateStudent(id, updateStudentRequestDto);
+
         if(studentResp == null) {
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.ok(studentResp);
     }
 
